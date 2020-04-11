@@ -1,2 +1,6 @@
+com\springsecurity\study\config\BlacklistFilter.class
+com\springsecurity\study\config\DbUser.class
 com\springsecurity\study\controller\MainController.class
+com\springsecurity\study\config\UserDao.class
+com\springsecurity\study\config\CustomAuthenticationManager.class
 com\springsecurity\study\controller\LoginLogoutController.class

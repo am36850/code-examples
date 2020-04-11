@@ -12,5 +12,8 @@
 	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
 		ac velit et ante laoreet eleifend. Donec vitae augue nec sem
 		condimentum varius.</p>
+	<form id="logout" action="../auth/logout" method="post">
+		<a href="#" onclick="document.getElementById('logout').submit();">Logout</a>
+	</form>
 </body>
 </html>
