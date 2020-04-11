@@ -16,7 +16,10 @@ public class LoginLogoutController {
 
 	@GetMapping("/login")
 	public String getLoginPage(@RequestParam(value = "error", required = false) boolean error,
-			@RequestParam(value = "logout", required = false) boolean logout, ModelMap map) {
+			@RequestParam(value = "logout", required = false) boolean logout,
+			@RequestParam(value = "sessionexpired", required = false) boolean sessionexpired,
+			@RequestParam(value = "permittedAuthExceeds", required = false) boolean permittedAuthExceeds,
+			ModelMap map) {
 		LOGGER.info("Login Page requested");
 		if (error) {
 			map.addAttribute("error", "You have entered invalid username and password!");
@@ -28,7 +31,18 @@ public class LoginLogoutController {
 		} else {
 			map.addAttribute("logout", "");
 		}
+		if (sessionexpired) {
+			map.addAttribute("sessionexpired", "Your session has expired!");
+		} else {
+			map.addAttribute("sessionexpired", "");
+		}
+		if (permittedAuthExceeds) {
+			map.addAttribute("permittedAuthExceeds", "Cocurrent access to the website is blocked for the same user");
+		} else {
+			map.addAttribute("permittedAuthExceeds", "");
+		}
 		return "loginpage";
+
 	}
 
 	@GetMapping("/denied")

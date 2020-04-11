@@ -13,6 +13,8 @@
 	<h1>Login</h1>
 	<div id="login-error">${error}</div>
 	<div id="login-error">${logout}</div>
+	<div id="login-error">${sessionexpired}</div>
+	<div id="login-error">${permittedAuthExceeds}</div>
 	<form action="../processlogin" method="post">
 		<p>
 			<label for="username">Username:</label> <input id="username"

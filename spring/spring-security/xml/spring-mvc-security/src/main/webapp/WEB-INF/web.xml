@@ -35,9 +35,16 @@
 		<!-- First version : everything is used from build in source -->
 		<!-- /WEB-INF/spring-security.xml -->
 		<!-- Second version : AuthenticationManager is custom -->
-		/WEB-INF/spring-security-custom-filtering.xml
+		<!-- /WEB-INF/spring-security-custom-filtering.xml -->
+		<!-- Third version : implemented concurrent session strategy -->
+		/WEB-INF/spring-security-session-registry.xml
 		/WEB-INF/applicationContext.xml
 		</param-value>
 	</context-param>
+	
+	<!-- required for concurrent session strategy -->
+	<listener>
+  		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
 
 </web-app>
