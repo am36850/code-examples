@@ -1,1 +1,2 @@
-com\springsecurity\study\MainController.class
+com\springsecurity\study\controller\MainController.class
+com\springsecurity\study\controller\LoginLogoutController.class

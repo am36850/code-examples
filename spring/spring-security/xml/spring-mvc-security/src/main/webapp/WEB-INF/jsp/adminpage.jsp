@@ -12,5 +12,8 @@
 	<p>Curabitur quis libero elit, dapibus iaculis nisl. Nullam quis
 		velit eget odio adipiscing tristique non sed ligula. In auctor diam
 		eget nisl condimentum laoreet..</p>
+	<form id="logout" action="../auth/logout" method="post">
+		<a href="#" onclick="document.getElementById('logout').submit();">Logout</a>
+	</form>
 </body>
 </html>

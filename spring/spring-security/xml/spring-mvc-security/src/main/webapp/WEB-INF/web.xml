@@ -5,7 +5,16 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
    http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
-	<display-name>Archetype Created Web Application</display-name>
+	<display-name>spring security web application</display-name>
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
@@ -20,4 +29,15 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		<!-- First version : everything is used from build in source -->
+		<!-- /WEB-INF/spring-security.xml -->
+		<!-- Second version : AuthenticationManager is custom -->
+		/WEB-INF/spring-security-custom-filtering.xml
+		/WEB-INF/applicationContext.xml
+		</param-value>
+	</context-param>
+
 </web-app>

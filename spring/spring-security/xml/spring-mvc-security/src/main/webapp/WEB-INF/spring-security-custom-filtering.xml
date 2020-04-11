@@ -1,0 +1,58 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
+
+	<bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<constructor-arg name="loginFormUrl" value="/auth/login" />
+	</bean>
+
+	<security:http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPoint">
+
+		<!-- URL patterns and there access -->
+		<security:intercept-url pattern="/auth/login"  access="permitAll" />
+		<security:intercept-url pattern="/auth/denied" access="permitAll" />
+		<security:intercept-url pattern="/main/admin"  access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/main/common" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
+
+		<!-- Logout settings -->
+		<security:logout delete-cookies="JSESSIONID" invalidate-session="true" logout-success-url="/auth/login?logout=true" logout-url="/auth/logout" />
+
+		<!-- Access denied due to resource access -->
+		<security:access-denied-handler error-page="/auth/denied" />
+
+		<security:csrf disabled="true" />
+
+		<!-- Custom filters to customize the code -->
+		<security:custom-filter ref="blacklistFilter" before="LAST" />
+		<security:custom-filter ref="authenticationFilter" position="LOGIN_PAGE_FILTER" />
+
+	</security:http>
+
+
+	<bean id="blacklistFilter" class="com.springsecurity.study.config.BlacklistFilter" />
+
+	<bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="usernameParameter"            value="username" />
+		<property name="passwordParameter"            value="password" />
+		<property name="filterProcessesUrl"           value="/processlogin" />
+		<property name="authenticationManager" 		  ref="customAuthenticationManager" />
+		<property name="authenticationSuccessHandler" ref="customAuthenticationSuccessHandler" />
+		<property name="authenticationFailureHandler" ref="customAuthenticationFailureHandler" />
+	</bean>
+
+	<bean id="customAuthenticationManager" class="com.springsecurity.study.config.CustomAuthenticationManager" />
+
+	<bean id="customAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/main/common"/>
+	</bean>
+
+	<bean id="customAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/auth/login?error=true" />
+	</bean>
+
+	<!-- Authentication provider who is responsible for loading user and there authorities -->
+	<security:authentication-manager />
+
+</beans>
